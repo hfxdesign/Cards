@@ -10,8 +10,9 @@ public class Card
     public color cardColor { get; set; }
     public int ID { get; set; }
     public String text { get; set; }
-    public Card(color cardColor, String text)
+    public Card(int ID, color cardColor, String text)
     {
+        this.ID = ID;
         this.cardColor = cardColor;
         this.text = text;
     }
