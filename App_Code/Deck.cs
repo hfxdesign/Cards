@@ -16,10 +16,8 @@ public class Deck {
 
         while (cardsList.Count > 1) {
             int i = rng.Next(cardsList.Count - 1);
-            Card tmp = cardsList[i];
-            cardsList[i] = cardsList[j];
-            cardsStack.Push(cardsList[j]);
-            cardsList.Remove(cardsList[j]);
+            cardsStack.Push(cardsList[i]);
+            cardsList.Remove(cardsList[i]);
         }
     }
 
