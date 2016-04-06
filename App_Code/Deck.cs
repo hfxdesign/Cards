@@ -7,8 +7,8 @@ public class Deck {
     public List<Card> cardsList;
     public Stack<Card> cardsStack;
 
-    public Boolean isEmpty() {
-        return (this.cardsList.Count > 0 ? false : true);
+    public bool isEmpty() {
+        return (cardsList.Count > 0 ? false : true);
     }
 
     public void Shuffle() {
