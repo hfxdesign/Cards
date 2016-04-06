@@ -11,6 +11,30 @@ public class Deck {
         return (cardsList.Count > 0 ? false : true);
     }
 
+    public void getDeck(Card.color deckColor) {
+        mySQL.Open();
+        OdbcCommand cmd = (deckColor == Card.color.BLACK)
+            ? new OdbcCommand("SELECT `id`, `card` FROM `whitecards`", mySQL)
+            : new OdbcCommand("SELECT `id`, `card` FROM `blackcards`", mySQL);
+        OdbcDataReader retData = cmd.ExecuteReader();
+
+        while (retData.Read()) {
+            cardsList.Add(new Card(Convert.ToInt32(retData[0].ToString()), Card.color.WHITE, retData[1].ToString()));
+        }
+        mySQL.Close();
+    }
+
+    public void getDeck(Card.color deckColor, int deckSize) {
+        mySQL.Open();
+        OdbcCommand cmd = new OdbcCommand("select id, card from whitecards", mySQL);
+        OdbcDataReader retData = cmd.ExecuteReader();
+
+        while (retData.Read() && cardsList.Count <= deckSize) {
+            cardsList.Add(new Card(Convert.ToInt32(retData[0].ToString()), Card.color.WHITE, retData[1].ToString()));
+        }
+        mySQL.Close();
+    }
+
     public void Shuffle() {
         Random rng = new Random();
 
@@ -21,25 +45,11 @@ public class Deck {
         }
     }
 
-    public Deck() {
-        mySQL.Open();
-        OdbcCommand cmd = new OdbcCommand("select id, card from whitecards", mySQL);
-        OdbcDataReader retData = cmd.ExecuteReader();
-
-        while (retData.Read()) {
-            cardsList.Add(new Card(Convert.ToInt32(retData[0].ToString()), Card.color.WHITE, retData[1].ToString()));
-        }
-        mySQL.Close();
+    public Deck(Card.color deckColor) {
+        getDeck(deckColor);
     }
 
-    public Deck(int stackSize) {
-        mySQL.Open();
-        OdbcCommand cmd = new OdbcCommand("select id, card from whitecards", mySQL);
-        OdbcDataReader retData = cmd.ExecuteReader();
-
-        while (retData.Read() && stackSize <= cardsList.Count) {
-            cardsList.Add(new Card(Convert.ToInt32(retData[0].ToString()), Card.color.WHITE, retData[1].ToString()));
-        }
-        mySQL.Close();
+    public Deck(Card.color deckColor, int deckSize) {
+        getDeck(deckColor, deckSize);
     }
 }
