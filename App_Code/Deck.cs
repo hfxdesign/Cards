@@ -1,38 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Odbc;
 
-public class Deck {
-    private OdbcConnection mySQL = new OdbcConnection("Dsn=CaH");
-    public List<Card> cardsList;
-    public Stack<Card> cardsStack;
+public class Deck<T> where T : Card {
+    public List<T> cardsList;
+    public Stack<T> cardsStack;
 
     public bool isEmpty() {
         return (cardsList.Count > 0 ? false : true);
-    }
-
-    public void getDeck(Card.color deckColor) {
-        mySQL.Open();
-        OdbcCommand cmd = (deckColor == Card.color.BLACK)
-            ? new OdbcCommand("SELECT `id`, `card` FROM `whitecards`", mySQL)
-            : new OdbcCommand("SELECT `id`, `card` FROM `blackcards`", mySQL);
-        OdbcDataReader retData = cmd.ExecuteReader();
-
-        while (retData.Read()) {
-            cardsList.Add(new Card(Convert.ToInt32(retData[0].ToString()), Card.color.WHITE, retData[1].ToString()));
-        }
-        mySQL.Close();
-    }
-
-    public void getDeck(Card.color deckColor, int deckSize) {
-        mySQL.Open();
-        OdbcCommand cmd = new OdbcCommand("select id, card from whitecards", mySQL);
-        OdbcDataReader retData = cmd.ExecuteReader();
-
-        while (retData.Read() && cardsList.Count <= deckSize) {
-            cardsList.Add(new Card(Convert.ToInt32(retData[0].ToString()), Card.color.WHITE, retData[1].ToString()));
-        }
-        mySQL.Close();
     }
 
     public void Shuffle() {
@@ -45,11 +19,16 @@ public class Deck {
         }
     }
 
-    public Deck(Card.color deckColor) {
-        getDeck(deckColor);
+    //Ctor for pulling entire T[] array
+    public Deck(T[] cardTable) {
+        cardsList.AddRange(cardTable);
+        Shuffle();
     }
 
-    public Deck(Card.color deckColor, int deckSize) {
-        getDeck(deckColor, deckSize);
+    //Ctor to specify a set deck size
+    public Deck(T[] cardTable, int deckSize) {
+        for (int i = 0; i < deckSize; i++)
+            cardsList.Add(cardTable[i]);
+        Shuffle();
     }
 }
