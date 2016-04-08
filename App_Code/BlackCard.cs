@@ -10,4 +10,12 @@
         this.pick = pick;
         this.text = text;
     }
+
+    public BlackCard(BlackCard obj)
+        : base(obj.ID) {
+
+        draw = obj.draw;
+        pick = obj.pick;
+        text = obj.text;
+    }
 }
