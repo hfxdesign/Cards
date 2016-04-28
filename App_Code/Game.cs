@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿/************************************************************************************************************************
+ * This is the main interface for the game, where we'll pull the tables from the database and load them into the decks.
+ * also handled here are the player's winning card count and a history of winning hands to upload back to the db. 
+ * ./NJ/.
+ ***********************************************************************************************************************/
 
-/// <summary>
-/// Summary description for Game
-/// </summary>
 public class Game
 {
     public Game()

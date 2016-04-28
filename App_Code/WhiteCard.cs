@@ -6,10 +6,4 @@
 
         this.text = text;
     }
-
-    public WhiteCard (WhiteCard obj) 
-        : base(obj.ID) {
-
-        text = obj.text;
-    }
 }
