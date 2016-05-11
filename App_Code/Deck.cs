@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class Deck<T> where T : Card {
+public class Deck<T> where T : WhiteCard {
     private List<T> cards;
 
     public bool isEmpty() {
@@ -11,7 +11,6 @@ public class Deck<T> where T : Card {
     public T drawCard() {
         T tempCard;
         int i = 0;
-
         while (cards.Count > 1) {
             i = new Random(cards.Count - 1).Next();
         }
@@ -20,13 +19,11 @@ public class Deck<T> where T : Card {
         return tempCard;
     }
 
-    //Ctor for pulling entire T[] array
     public Deck(T[] cardTable) {
         for (int i = 0; i < cardTable.Length; i++)
             cards.Add(cardTable[i]);
     }
 
-    //Ctor to specify a set deck size
     public Deck(T[] cardTable, int deckSize) {
         if (cardTable.Length >= deckSize) {
             for (int i = 0; i < deckSize; i++)
