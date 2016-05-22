@@ -4,9 +4,10 @@
  * ./NJ/.
  ***********************************************************************************************************************/
 
-public class Game
-{
-    public Game()
+public class Game {
+
+
+    public Game(int numberOfPlayers)
     {
         //
         // TODO: Add constructor logic here

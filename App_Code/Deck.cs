@@ -26,7 +26,7 @@ public class Deck<T> where T : WhiteCard {
     /// <summary>
     /// Check to see if the deck is empty.
     /// </summary>
-    /// <returns>Returns: <see cref="true"/> or <see cref="false"/></returns>
+    /// <returns>Returns <see cref="true"/> or <see cref="false"/></returns>
     public bool isEmpty() {
         return (cards.Count > 0 ? false : true);
     }
@@ -35,7 +35,7 @@ public class Deck<T> where T : WhiteCard {
     /// Draw a card from the deck.
     /// This will flag the card as <see cref="drawn"/> and reduce the count of <see cref="remainingCards"/>
     /// </summary>
-    /// <returns>Returns: a copy of the drawn card</returns>
+    /// <returns>Returns a copy of the drawn card</returns>
     public T drawCard() {
         int i = 0;
         if (cards.Count > 1) {
