@@ -2,14 +2,14 @@
 using System;
 using System.Collections.Generic;
 
-class DBConnect {
+public class DBConnector {
     private MySqlConnection connection;
     private string server;
     private string database;
     private string uid;
     private string password;
 
-    public DBConnect() {
+    public DBConnector() {
         Initialize();
     }
 
@@ -55,7 +55,47 @@ class DBConnect {
         }
     }
 
-    public LinkedList<WhiteCard> getWhiteDeck() {
-        string query = "SELECT * FROM whiteCards"
+    public Deck<BlackCard> getBlackCards() {
+        Deck<BlackCard> newDeck = new Deck<BlackCard>();
+        string query = "SELECT `card`, `draw`, `pick` FROM `blackcards` ORDER BY `id` ASC";
+
+        if (OpenConnection()) {
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+            MySqlDataReader dataReader = cmd.ExecuteReader();
+
+            uint id = 0;
+            while (dataReader.Read()) {
+                newDeck.addCard(
+                    new BlackCard(
+                        id++,
+                        dataReader["card"] + "",
+                        Convert.ToInt32(dataReader["draw"] + ""),
+                        Convert.ToInt32(dataReader["pick"] + "")
+                ));
+            }
+
+            dataReader.Close();
+            CloseConnection();
+        }
+        return newDeck;
+    }
+
+    public Deck<WhiteCard> getWhiteCards() {
+        Deck<WhiteCard> newDeck = new Deck<WhiteCard>();
+        string query = "SELECT `card` FROM `whitecards` ORDER BY `id` ASC";
+
+        if (OpenConnection()) {
+            MySqlCommand cmd = new MySqlCommand(query, connection);
+            MySqlDataReader dataReader = cmd.ExecuteReader();
+
+            uint id = 0;
+            while (dataReader.Read()) {
+                newDeck.addCard(new WhiteCard(id++, dataReader["card"] + ""));
+            }
+
+            dataReader.Close();
+            CloseConnection();
+        }
+        return newDeck;
     }
 }

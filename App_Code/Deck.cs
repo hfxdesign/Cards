@@ -7,31 +7,6 @@ public class Deck<T> where T : WhiteCard {
     private List<bool> drawn;
 
     /// <summary>
-    /// Construct a new <see cref="Deck{T}"/> from another <see cref="System.Collections"/> type
-    /// </summary>
-    /// <param name="cardTable">Name of other <see cref="System.Collections"/></param> type
-    public Deck(T[] cardTable) {
-        for (int i = 0; i < cardTable.Length; i++) {
-            cards.Add(cardTable[i]);
-            drawn.Add(false);
-        }
-        remainingCards = cards.Count;
-    }
-
-    /// <summary>
-    /// Construct a new <see cref="Deck{T}"/> from a plain <see cref="Array"/>
-    /// </summary>
-    /// <param name="cardTable">Name of the <see cref="Array"/> to copy</param>
-    /// <param name="tableSize">size of the <see cref="Array"/ to copy></param>
-    public Deck(T[] cardTable, int tableSize) {
-        for (int i = 0; i < tableSize - 1; i++) {
-            cards[i] = cardTable[i];
-            drawn[i] = false;
-        }
-        remainingCards = cards.Count;
-    }
-
-    /// <summary>
     /// Create a copy of another <see cref="Deck{T}"/>
     /// </summary>
     /// <param name="oldDeck">Name of the other <see cref="Deck{T}"/></param>
@@ -41,6 +16,24 @@ public class Deck<T> where T : WhiteCard {
             drawn.Add(oldDeck.drawn[i]);
         }
         remainingCards = cards.Count;
+    }
+
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    public Deck() {
+        cards = new List<T>();
+        drawn = new List<bool>();
+    }
+
+    /// <summary>
+    /// Add a new card to the deck
+    /// </summary>
+    /// <param name="card">Card to be added</param>
+    public void addCard(T card) {
+        cards.Add(card);
+        drawn.Add(false);
+        ++remainingCards;
     }
 
     /// <summary>
@@ -75,11 +68,11 @@ public class Deck<T> where T : WhiteCard {
     /// <returns>Returns a copy of the drawn card</returns>
     public T drawCard() {
         int i = 0;
-        if (cards.Count > 1) {
-            i = new Random(cards.Count - 1).Next();
+        if (cards.Count > 0) {
+            i = new Random().Next(cards.Count - 1);
 
             while (drawn[i])
-                i = (i == (drawn.Count - 1)) ? i + 1 : 0;
+                i = (i == (drawn.Count - 1)) ? 0 : i + 1;
         }
         T tempCard = cards[i];
         drawn[i] = true;

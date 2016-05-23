@@ -13,7 +13,7 @@ public class WhiteCard : IComparable {
     /// </summary>
     /// <param name="ID"><see cref="uint"/>ID number of the card</param>
     /// <param name="cardText"><see cref="string"/>Text (content) of the card</param>
-    public WhiteCard(uint ID, string text) {
+    public WhiteCard(uint ID, string cardText) {
         this.ID = ID;
         this.cardText = cardText;
     }
