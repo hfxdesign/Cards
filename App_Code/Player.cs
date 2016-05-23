@@ -12,7 +12,7 @@ class winningHand {
 public class Player {
     private const int HANDSIZE = 10;
     private List<WhiteCard> hand = new List<WhiteCard>();
-    private LinkedList<winningHand> winningHands;
+    private LinkedList<winningHand> winningHands = new LinkedList<winningHand>();
     private int handsWon = 0, handsLost = 0;
     private int pickCount = 0;
 

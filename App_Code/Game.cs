@@ -9,8 +9,12 @@ public class Game {
 
     public Game(int numberOfPlayers)
     {
-        //
-        // TODO: Add constructor logic here
-        //
+        DBConnector db = new DBConnector();
+        Deck<BlackCard> blackCards = db.getBlackCards();
+        Deck<WhiteCard> whiteCards = db.getWhiteCards();
+
+        Player[] players = new Player[numberOfPlayers];
+        for (int i = 0; i < numberOfPlayers; i++)
+            players[i] = new Player(whiteCards);
     }
 }
