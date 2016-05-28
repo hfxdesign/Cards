@@ -9,10 +9,13 @@ class winningHand {
     WhiteCard[] whiteCards = new WhiteCard[3];
 }
 
+/// <summary>
+/// <see cref="Player"/> object for "Cards against Humanity Online"
+/// </summary>
 public class Player {
     private const int HANDSIZE = 10;
-    private List<WhiteCard> hand = new List<WhiteCard>();
-    private LinkedList<winningHand> winningHands = new LinkedList<winningHand>();
+    private List<WhiteCard> hand;
+    private LinkedList<winningHand> winningHands;
     private int handsWon = 0, handsLost = 0;
     private int pickCount = 0;
 
@@ -28,9 +31,11 @@ public class Player {
     /// Create a new player and link the <see cref="Deck{T}"/> <para />
     /// Draw 10 cards from the linked <see cref="Deck{T}"/>
     /// </summary>
-    /// <param name="whiteDeck"></param>
+    /// <param name="whiteDeck">(<see cref="Deck{WhiteCard}"/>) name of other object</param>
     public Player(Deck<WhiteCard> whiteDeck) {
-        for (int i = 0; i < HANDSIZE; i++)
+        hand = new List<WhiteCard>();
+        //winningHands = new LinkedList<winningHand>();
+        for (int i = 0; !whiteDeck.isEmpty() && i < HANDSIZE; i++)
             hand.Add(whiteDeck.drawCard());
     }
 }

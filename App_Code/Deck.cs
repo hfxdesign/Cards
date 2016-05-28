@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class Deck<T> where T : WhiteCard {
+public class Deck<T>
+    where T : WhiteCard {
+
     private int remainingCards;
     private List<T> cards;
     private List<bool> drawn;
@@ -9,7 +11,7 @@ public class Deck<T> where T : WhiteCard {
     /// <summary>
     /// Create a copy of another <see cref="Deck{T}"/>
     /// </summary>
-    /// <param name="oldDeck">Name of the other <see cref="Deck{T}"/></param>
+    /// <param name="oldDeck">Name of the other object</param>
     public Deck(Deck<T> oldDeck) {
         for (int i = 0; i < oldDeck.cards.Count; i++) {
             cards.Add(oldDeck.cards[i]);
@@ -38,19 +40,24 @@ public class Deck<T> where T : WhiteCard {
 
     /// <summary>
     /// Clean the deck up.
-    /// This will create a new instance of the deck minus the drawn cards.
-    /// This should be executed between rounds.
     /// </summary>
+    /// <remarks>
+    /// Will create a new deck, minus cards with 'drawn == true'
+    /// Use this between rounds to reclaim memory and
+    /// increase the efficiency of drawCard
+    /// </remarks>
     public void cleanupDeck() {
         List<T> newCards = new List<T>(remainingCards);
 
-        for (int i = 0; i < cards.Count; i++) {
-            if (!drawn[i])
-                newCards.Add(cards[i]);
-        }
+        if (isEmpty()) {
+            for (int i = 0; i < cards.Count; i++) {
+                if (!drawn[i])
+                    newCards.Add(cards[i]);
+            }
 
-        cards = newCards;
-        drawn = new List<bool> { false };
+            cards = newCards;
+            drawn = new List<bool> { false };
+        }
     }
 
     /// <summary>
@@ -68,12 +75,11 @@ public class Deck<T> where T : WhiteCard {
     /// <returns>Returns a copy of the drawn card</returns>
     public T drawCard() {
         int i = 0;
-        if (cards.Count > 0) {
-            i = new Random().Next(cards.Count - 1);
+        i = new Random().Next(cards.Count - 1);
 
-            while (drawn[i])
-                i = (i == (drawn.Count - 1)) ? 0 : i + 1;
-        }
+        while (drawn[i])
+            i = (i == (drawn.Count - 1)) ? 0 : i + 1;
+
         T tempCard = cards[i];
         drawn[i] = true;
         --remainingCards;

@@ -5,23 +5,33 @@
 /// </summary>
 [Serializable]
 public class WhiteCard : IComparable {
-    public uint ID { get; set; }
-    public string cardText { get; set; }
+    public int ID;
+    public string cardText;
 
     /// <summary>
     /// Create a new <see cref="WhiteCard"/>
     /// </summary>
-    /// <param name="ID"><see cref="uint"/>ID number of the card</param>
-    /// <param name="cardText"><see cref="string"/>Text (content) of the card</param>
-    public WhiteCard(uint ID, string cardText) {
+    /// <param name="ID">ID number of the card</param>
+    /// <param name="cardText">Text (content) of the card</param>
+    public WhiteCard(int ID, string cardText) {
         this.ID = ID;
+        this.cardText = cardText;
+    }
+
+    /// <summary>
+    /// Create a new <see cref="WhiteCard"/>
+    /// </summary>
+    /// <param name="ID">ID number of the card</param>
+    /// <param name="cardText">Text (content) of the card</param>
+    public WhiteCard(string ID, string cardText) {
+        this.ID = Convert.ToInt32(ID);
         this.cardText = cardText;
     }
 
     /// <summary>
     /// Copy another <see cref="WhiteCard"/>
     /// </summary>
-    /// <param name="obj">Name of another <see cref="WhiteCard"/></param>
+    /// <param name="obj">Name of other object</param>
     public WhiteCard(WhiteCard obj) {
         ID = obj.ID;
         cardText = obj.cardText;

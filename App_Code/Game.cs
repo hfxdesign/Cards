@@ -5,11 +5,19 @@
  ***********************************************************************************************************************/
 
 public class Game {
+    //Connection info for DBConnector
+    private string
+        server      = "devxt.com",      // Hostname or IP of the server
+        database    = "autocore_cards", // Name of the database / schema
+        uid         = "autocore_cards", // Username
+        password    = "C4rdz!"          // Password
+    ;
+
 
 
     public Game(int numberOfPlayers)
     {
-        DBConnector db = new DBConnector();
+        DBConnector db = new DBConnector(server, database, uid, password);
         Deck<BlackCard> blackCards = db.getBlackCards();
         Deck<WhiteCard> whiteCards = db.getWhiteCards();
 
